@@ -1,10 +1,8 @@
 const details = document.getElementById("details");
 
-// Get product ID from URL
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get("id");
 
-// Fetch product by ID
 async function fetchProductById(id) {
   try {
     const res = await fetch(`https://dummyjson.com/products/${id}`);

@@ -5,7 +5,6 @@ const categoryFilter = document.getElementById("categoryFilter");
 let products = [];
 let allProducts = [];
 
-// Fetch all products initially
 async function fetchProducts() {
   try {
     const res = await fetch("https://dummyjson.com/products");
@@ -19,7 +18,6 @@ async function fetchProducts() {
   }
 }
 
-// Fetch products by category
 async function fetchProductsByCategory(category) {
   try {
     if (category === "all") {
@@ -37,7 +35,6 @@ async function fetchProductsByCategory(category) {
   }
 }
 
-// Render product cards
 function renderProducts(data) {
   if (!data || data.length === 0) {
     container.innerHTML = `<p class="text-center text-gray-500 text-lg col-span-full">No products found.</p>`;
@@ -52,7 +49,7 @@ function renderProducts(data) {
           
           <div class="relative bg-gray-50 flex justify-center items-center p-6">
             <img src="${p.thumbnail}" alt="${p.title}" 
-                 class="object-contain w-full h-48 transition-transform duration-300">
+              class="object-contain w-full h-48 transition-transform duration-300">
           </div>
 
           <div class="p-4 flex flex-col justify-between h-48">
@@ -98,7 +95,6 @@ filterBtn.addEventListener("click", () => {
   renderProducts(filtered);
 });
 
-// Navigate to product details
 function viewDetails(id) {
   window.location.href = `product-details.html?id=${id}`;
 }
