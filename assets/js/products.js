@@ -7,7 +7,7 @@ let allProducts = [];
 
 async function fetchProducts() {
   try {
-    const res = await fetch("https://dummyjson.com/products");
+    const res = await fetch("https://dummyjson.com/products?limit=4");
     const data = await res.json();
     products = data.products;
     allProducts = data.products;
@@ -69,25 +69,30 @@ function renderProducts(data) {
     .join("");
 }
 
-// Render category dropdown
-function renderCategoryOptions(data) {
-  const categories = [...new Set(data.map((p) => p.category))];
+async function renderCategoryOptions() {
+  try {
+    const res = await fetch("https://dummyjson.com/products/categories");
+    const categories = await res.json();
+    console.log(2222222222);
 
-  categoryFilter.innerHTML = `
-        <option value="all">All Categories</option>
-        ${categories
-          .map((cat) => `<option value="${cat}">${cat}</option>`)
-          .join("")}
-      `;
+    console.log(categories);
+
+    categoryFilter.innerHTML = `
+          <option value="all">All Categories</option>
+          ${categories
+            .map((cat) => `<option value="${cat.name}">${cat.name}</option>`)
+            .join("")}
+        `;
+  } catch (err) {
+    console.error("Error fetching categories:", err);
+  }
 }
 
-// Handle category change (auto-fetch)
 categoryFilter.addEventListener("change", (e) => {
   const selectedCategory = e.target.value;
   fetchProductsByCategory(selectedCategory);
 });
 
-// Filter by price
 filterBtn.addEventListener("click", () => {
   const min = parseFloat(document.getElementById("minPrice").value) || 0;
   const max = parseFloat(document.getElementById("maxPrice").value) || Infinity;
